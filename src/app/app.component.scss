@@ -1,0 +1,31 @@
+.row {
+  display: flex;
+  // TODO use CSS grid instead
+}
+.input-button {
+  display: inline-block;
+  flex: 1 0 50%;
+  height: 10vh;
+  min-height: 2rem;
+  max-height: 6rem;
+  padding: 4px;
+  position: relative;
+
+  input {
+    display: none;
+  }
+
+  &__text {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
+    background-color: #ccc;
+
+    input:checked ~ & {
+      background-color: #8F0000;
+      color: white;
+    }
+  }
+}
