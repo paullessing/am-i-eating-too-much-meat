@@ -6,31 +6,82 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   template: `
     <form [formGroup]="form">
       <div class="row">
-        <label class="input-button">
-          <input
-            class="input-button__input"
-            type="radio"
-            formControlName="day"
-            value="yesterday"
-          >
-          <span class="input-button__text">
-            Yesterday
-          </span>
-        </label>
-        <label class="input-button">
-          <input
-            class="input-button__input"
-            type="radio"
-            formControlName="day"
-            value="today"
-          >
-          <span class="input-button__text">
-            Today
-          </span>
-        </label>
+        <app-button
+          class="row__input"
+          [control]="form.controls.day"
+          value="today"
+          name="day"
+        >Today</app-button>
+        <app-button
+          class="row__input"
+          [control]="form.controls.day"
+          value="yesterday"
+          name="day"
+        >Yesterday</app-button>
       </div>
+      <div class="row">
+        <app-button
+          class="row__input"
+          [control]="form.controls.meal"
+          value="breakfast"
+          name="meal"
+        >Breakfast</app-button>
+        <app-button
+          class="row__input"
+          [control]="form.controls.meal"
+          value="lunch"
+          name="meal"
+        >Lunch</app-button>
+        <app-button
+          class="row__input"
+          [control]="form.controls.meal"
+          value="dinner"
+          name="meal"
+        >Dinner</app-button>
+        <app-button
+          class="row__input"
+          [control]="form.controls.meal"
+          value="snacks"
+          name="meal"
+        >Snacks</app-button>
+      </div>
+      <div class="row">
+        <app-button
+          class="row__input"
+          [control]="form.controls.type"
+          value="meat"
+          name="type"
+        >Meat</app-button>
+        <app-button
+          class="row__input"
+          [control]="form.controls.type"
+          value="ethical-meat"
+          name="type"
+        >Meat (Ethical)</app-button>
+        <app-button
+          class="row__input"
+          style="margin-right: 50%"
+          [control]="form.controls.type"
+          value="fish"
+          name="type"
+        >Fish</app-button>
+        <app-button
+          class="row__input"
+          [control]="form.controls.type"
+          value="vegetarian"
+          name="type"
+        >Vegetarian</app-button>
+        <app-button
+          class="row__input"
+          [control]="form.controls.type"
+          value="vegan"
+          name="type"
+        >Vegan</app-button>
+      </div>
+      <button type="submit" class="submit">Send</button>
     </form>
     {{ form.value | json }}
+    {{ form.valid | json }}
   `,
   styleUrls: ['./app.component.scss']
 })
@@ -39,7 +90,9 @@ export class AppComponent {
 
   constructor() {
     this.form = new FormGroup({
-      day: new FormControl(null, Validators.required)
+      day: new FormControl('today', Validators.required),
+      meal: new FormControl(null, Validators.required),
+      type: new FormControl(null, Validators.required)
     });
   }
 }
