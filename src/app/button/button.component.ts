@@ -17,7 +17,7 @@ import { FormControl } from '@angular/forms';
       </span>
     </label>
   `,
-  styleUrls: ['./button.component.scss']
+  styleUrls: ['./button.component.scss'],
 })
 export class ButtonComponent {
 
