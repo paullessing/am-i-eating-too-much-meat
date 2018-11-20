@@ -3,7 +3,8 @@ import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { format, subDays } from 'date-fns';
-import { auth } from 'firebase/app';
+import { auth, User } from 'firebase/app';
+import { Observable } from 'rxjs';
 
 type Day = 'today' | 'yesterday';
 type Meal = 'breakfast' | 'lunch' | 'dinner' | 'snacks';
@@ -24,7 +25,7 @@ interface FormDayData {
 @Component({
   selector: 'app-root',
   template: `
-    <ng-container *ngIf="fireAuth.user | async; else login">
+    <ng-container *ngIf="user | async; else login">
       <form [formGroup]="form" (submit)="onSubmit()">
         <div class="row">
           <app-button
@@ -117,6 +118,7 @@ export class AppComponent implements OnInit {
   public feedback: string | null;
 
   public all: DayData[];
+  public user: Observable<User | null>;
 
   private data: AngularFirestoreCollection<DayData>;
 
@@ -130,6 +132,7 @@ export class AppComponent implements OnInit {
       type: new FormControl(null, Validators.required),
     });
     this.feedback = null;
+    this.user = this.fireAuth.user;
   }
 
   public ngOnInit(): void {
@@ -158,7 +161,7 @@ export class AppComponent implements OnInit {
 
     try {
       await this.data.doc(id).set(data);
-      this.feedback = 'Added!';
+      this.feedback = `Added: ${formData.meal} ${formData.day}`;
     } catch (e) {
       this.feedback = 'Error';
     }
